@@ -1,38 +1,61 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <iostream>
+#include <cstdio>
 
-int main(void)
+using namespace std;
+
+void error_callback(int error, const char *description) {
+    cerr << "Error " << description << endl;
+}
+
+int main()
 {
-    GLFWwindow* window;
+    glfwSetErrorCallback(error_callback);
 
-    /* Initialize the library */
-    if (!glfwInit())
+    GLFWwindow *window;
+
+    if(!glfwInit())
         return -1;
 
-    /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-    if (!window)
-    {
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
+    window = glfwCreateWindow(640, 480, "Space Invaders", NULL, NULL);
+    if(!window) {
+        glfwTerminate();
+        return -1;
+    }
+    glfwMakeContextCurrent(window);
+
+    GLenum err = glewInit();
+    if(err != GLEW_OK) {
+        cerr << "Error initializing GLEW" << endl;
         glfwTerminate();
         return -1;
     }
 
-    /* Make the window's context current */
-    glfwMakeContextCurrent(window);
+    int glVersion[2] = {-1, 1};
+    glGetIntegerv(GL_MAJOR_VERSION, &glVersion[0]);
+    glGetIntegerv(GL_MINOR_VERSION, &glVersion[1]);
 
-    /* Loop until the user closes the window */
-    while (!glfwWindowShouldClose(window))
-    {
-        /* Render here */
+    cout << "Using OpenGL: " << glVersion[0] << "." << glVersion[1];
+    cout << GL_RENDERER;
+
+
+    glClearColor(255.0, 0.0, 154.0, 1.0);
+    while(!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
-
-        /* Swap front and back buffers */
         glfwSwapBuffers(window);
-
-        /* Poll for and process events */
         glfwPollEvents();
     }
 
+
+
+
+    glfwDestroyWindow(window);
     glfwTerminate();
     return 0;
 }
