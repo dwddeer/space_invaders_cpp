@@ -49,11 +49,11 @@ cmake_ninja_workdir = R$:/MyProjects/space$ invaders/cmake-build-debug/
 
 build cmake_object_order_depends_target_space_invaders: phony || CMakeFiles/space_invaders.dir
 
-build CMakeFiles/space_invaders.dir/main.cpp.obj: CXX_COMPILER__space_invaders_unscanned_Debug R$:/MyProjects/space$ invaders/main.cpp || cmake_object_order_depends_target_space_invaders
-  DEP_FILE = CMakeFiles\space_invaders.dir\main.cpp.obj.d
+build CMakeFiles/space_invaders.dir/src/main.cpp.obj: CXX_COMPILER__space_invaders_unscanned_Debug R$:/MyProjects/space$ invaders/src/main.cpp || cmake_object_order_depends_target_space_invaders
+  DEP_FILE = CMakeFiles\space_invaders.dir\src\main.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\space_invaders.dir
-  OBJECT_FILE_DIR = CMakeFiles\space_invaders.dir
+  OBJECT_FILE_DIR = CMakeFiles\space_invaders.dir\src
 
 
 # =============================================================================
@@ -63,7 +63,7 @@ build CMakeFiles/space_invaders.dir/main.cpp.obj: CXX_COMPILER__space_invaders_u
 #############################################
 # Link the executable space_invaders.exe
 
-build space_invaders.exe: CXX_EXECUTABLE_LINKER__space_invaders_Debug CMakeFiles/space_invaders.dir/main.cpp.obj
+build space_invaders.exe: CXX_EXECUTABLE_LINKER__space_invaders_Debug CMakeFiles/space_invaders.dir/src/main.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lfreeglut  -lglew32  -lopengl32  -lglfw3  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\space_invaders.dir

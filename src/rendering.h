@@ -1,10 +1,9 @@
+#ifndef SPACE_INVADERS_RENDERING_H
+#define SPACE_INVADERS_RENDERING_H
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-
-
-#ifndef SPACE_INVADERS_RENDERING_H
-#define SPACE_INVADERS_RENDERING_H
 
 struct Buffer {
     size_t width;
