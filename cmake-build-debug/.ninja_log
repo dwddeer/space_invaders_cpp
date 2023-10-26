@@ -1,0 +1,5 @@
+# ninja log v5
+2	136	7199733467663683	CMakeFiles/space_invaders.dir/main.cpp.obj	b000442cc10095bf
+1	8	0	clean	41c887a2f289ec38
+136	227	7199733468543879	space_invaders.exe	4a9a6689fe3a1c16
+0	101	7200091344476703	build.ninja	c3386d5de0cb16da

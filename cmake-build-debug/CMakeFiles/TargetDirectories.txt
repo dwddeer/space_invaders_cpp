@@ -1,0 +1,3 @@
+R:/MyProjects/space invaders/cmake-build-debug/CMakeFiles/space_invaders.dir
+R:/MyProjects/space invaders/cmake-build-debug/CMakeFiles/edit_cache.dir
+R:/MyProjects/space invaders/cmake-build-debug/CMakeFiles/rebuild_cache.dir
