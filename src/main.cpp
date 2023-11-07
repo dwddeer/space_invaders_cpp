@@ -1,5 +1,9 @@
-#include "rendering.cpp"
-#include "ErrorHandling.cpp"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <iostream>
+
+#include "Dependencies/include/rendering.h"
+#include "Dependencies/include/ErrorHandling.h"
 
 using namespace std;
 
@@ -18,7 +22,7 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
     GLFWwindow *window;
-    window = glfwCreateWindow(640, 480, "Space Invaders", nullptr, nullptr);
+    window = glfwCreateWindow(900, 900, "Space Invaders", nullptr, nullptr);
     if(!window) {
         glfwTerminate();
         return -1;
@@ -137,15 +141,26 @@ int main() {
     alien_sprite.height = 8;
     alien_sprite.data = new uint8_t[alien_sprite.width * alien_sprite.height]
             {
-                    0,0,1,0,0,0,0,0,1,0,0, // ..@.....@..
-                    0,0,0,1,0,0,0,1,0,0,0, // ...@...@...
-                    0,0,1,1,1,1,1,1,1,0,0, // ..@@@@@@@..
-                    0,1,1,0,1,1,1,0,1,1,0, // .@@.@@@.@@.
-                    1,1,1,1,1,1,1,1,1,1,1, // @@@@@@@@@@@
-                    1,0,1,1,1,1,1,1,1,0,1, // @.@@@@@@@.@
-                    1,0,1,0,0,0,0,0,1,0,1, // @.@.....@.@
-                    0,0,0,1,1,0,1,1,0,0,0  // ...@@.@@...
+                    0,0,1,0,0,0,0,0,1,0,0, // . . @ . . . . . @ . .
+                    0,0,0,1,0,0,0,1,0,0,0, // . . . @ . . . @ . . .
+                    0,0,1,1,1,1,1,1,1,0,0, // . . @ @ @ @ @ @ @ . .
+                    0,1,1,0,1,1,1,0,1,1,0, // . @ @ . @ @ @ . @ @ .
+                    1,1,1,1,1,1,1,1,1,1,1, // @ @ @ @ @ @ @ @ @ @ @
+                    1,0,1,1,1,1,1,1,1,0,1, // @ . @ @ @ @ @ @ @ . @
+                    1,0,1,0,0,0,0,0,1,0,1, // @ . @ . . . . . @ . @
+                    0,0,0,1,1,0,1,1,0,0,0  // . . . @ @ . @ @ . . .
             };
+
+    /*
+        0,0,0,0,0,1,0,0,0,0,0,
+        0,0,0,0,1,1,1,0,0,0,0,
+        0,0,0,0,1,1,1,0,0,0,0,
+        0,0,0,0,1,1,1,0,0,0,0,
+        0,0,0,0,1,1,1,0,0,0,0,
+        0,0,0,0,1,1,1,0,0,0,0,
+        0,0,1,1,1,0,1,1,1,0,0,
+        0,0,1,1,1,0,1,1,1,0,0
+    */
 
     uint32_t clear_color = rgbToUint32(252, 245, 237);
 
