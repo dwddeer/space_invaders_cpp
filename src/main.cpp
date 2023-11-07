@@ -178,10 +178,24 @@ int main() {
     my_game.player.y = 32;
     my_game.player.lives = 3;
 
+
+    for(size_t yi = 0; yi < 5; yi++) {
+        for(size_t xi = 0; xi < 11; xi++) {
+            my_game.aliens[yi * 11 + xi].x = 16 * xi + 20;
+            my_game.aliens[yi * 11 + xi].y = 17 * xi + 128;
+        }
+    }
+
+    //MAIN GAME LOOP
     while(!glfwWindowShouldClose(window)) {
         bufferClear(&buffer, clear_color);
 
-        bufferDrawSprite(&buffer, alien_sprite, 112, 128, rgbToUint32(206, 90, 103));
+        for(size_t i = 0; i < my_game.aliens_num; i++) {
+            const Alien &alien = my_game.aliens[i];
+            bufferDrawSprite(&buffer, alien_sprite, alien.x, alien.y, rgbToUint32(206, 90, 103));
+        }
+
+        bufferDrawSprite(&buffer, player_sprite, my_game.player.x, my_game.player.y, rgbToUint32(206, 90, 103));
 
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -200,5 +214,9 @@ int main() {
 
     glfwDestroyWindow(window);
     glfwTerminate();
+
+    delete[] buffer.data;
+
+
     return 0;
 }
