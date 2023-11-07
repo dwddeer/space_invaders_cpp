@@ -2,8 +2,9 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-#include "Dependencies/include/rendering.h"
+#include "Dependencies/include/Rendering.h"
 #include "Dependencies/include/ErrorHandling.h"
+#include "Dependencies/include/Game.h"
 
 using namespace std;
 
@@ -140,29 +141,42 @@ int main() {
     alien_sprite.width = 11;
     alien_sprite.height = 8;
     alien_sprite.data = new uint8_t[alien_sprite.width * alien_sprite.height]
-            {
-                    0,0,1,0,0,0,0,0,1,0,0, // . . @ . . . . . @ . .
-                    0,0,0,1,0,0,0,1,0,0,0, // . . . @ . . . @ . . .
-                    0,0,1,1,1,1,1,1,1,0,0, // . . @ @ @ @ @ @ @ . .
-                    0,1,1,0,1,1,1,0,1,1,0, // . @ @ . @ @ @ . @ @ .
-                    1,1,1,1,1,1,1,1,1,1,1, // @ @ @ @ @ @ @ @ @ @ @
-                    1,0,1,1,1,1,1,1,1,0,1, // @ . @ @ @ @ @ @ @ . @
-                    1,0,1,0,0,0,0,0,1,0,1, // @ . @ . . . . . @ . @
-                    0,0,0,1,1,0,1,1,0,0,0  // . . . @ @ . @ @ . . .
-            };
+    {
+            0,0,1,0,0,0,0,0,1,0,0, // . . @ . . . . . @ . .
+            0,0,0,1,0,0,0,1,0,0,0, // . . . @ . . . @ . . .
+            0,0,1,1,1,1,1,1,1,0,0, // . . @ @ @ @ @ @ @ . .
+            0,1,1,0,1,1,1,0,1,1,0, // . @ @ . @ @ @ . @ @ .
+            1,1,1,1,1,1,1,1,1,1,1, // @ @ @ @ @ @ @ @ @ @ @
+            1,0,1,1,1,1,1,1,1,0,1, // @ . @ @ @ @ @ @ @ . @
+            1,0,1,0,0,0,0,0,1,0,1, // @ . @ . . . . . @ . @
+            0,0,0,1,1,0,1,1,0,0,0  // . . . @ @ . @ @ . . .
+    };
 
-    /*
-        0,0,0,0,0,1,0,0,0,0,0,
-        0,0,0,0,1,1,1,0,0,0,0,
-        0,0,0,0,1,1,1,0,0,0,0,
-        0,0,0,0,1,1,1,0,0,0,0,
-        0,0,0,0,1,1,1,0,0,0,0,
-        0,0,0,0,1,1,1,0,0,0,0,
-        0,0,1,1,1,0,1,1,1,0,0,
-        0,0,1,1,1,0,1,1,1,0,0
-    */
+    Sprite player_sprite;
+    player_sprite.width = 11;
+    player_sprite.height = 7;
+    player_sprite.data = new uint8_t[player_sprite.width * player_sprite.height]
+    {
+            0,0,0,0,0,1,0,0,0,0,0, // .....@.....
+            0,0,0,0,1,1,1,0,0,0,0, // ....@@@....
+            0,0,0,0,1,1,1,0,0,0,0, // ....@@@....
+            0,1,1,1,1,1,1,1,1,1,0, // .@@@@@@@@@.
+            1,1,1,1,1,1,1,1,1,1,1, // @@@@@@@@@@@
+            1,1,1,1,1,1,1,1,1,1,1, // @@@@@@@@@@@
+            1,1,1,1,1,1,1,1,1,1,1, // @@@@@@@@@@@
+    };
 
     uint32_t clear_color = rgbToUint32(252, 245, 237);
+
+    Game my_game;
+    my_game.width = buffer_width;
+    my_game.width = buffer_height;
+    my_game.aliens_num = 55;
+    my_game.aliens = new Alien[my_game.aliens_num];
+
+    my_game.player.x = 112 - 5;
+    my_game.player.y = 32;
+    my_game.player.lives = 3;
 
     while(!glfwWindowShouldClose(window)) {
         bufferClear(&buffer, clear_color);
