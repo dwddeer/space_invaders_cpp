@@ -182,7 +182,7 @@ int main() {
     for(size_t yi = 0; yi < 5; yi++) {
         for(size_t xi = 0; xi < 11; xi++) {
             my_game.aliens[yi * 11 + xi].x = 16 * xi + 20;
-            my_game.aliens[yi * 11 + xi].y = 17 * xi + 128;
+            my_game.aliens[yi * 11 + xi].y = 17 * yi + 128;
         }
     }
 
