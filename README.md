@@ -1,1 +1,1 @@
-# space_invaders_recreation_cpp
+# Space Invaders in C++ with OpenGL
