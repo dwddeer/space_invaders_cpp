@@ -1,9 +1,6 @@
 #ifndef SPACE_INVADERS_GAME_H
 #define SPACE_INVADERS_GAME_H
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <iostream>
 #include "Rendering.h"
 
 struct Alien {
@@ -25,7 +22,7 @@ struct Game {
 
 struct SpriteAnimation {
     bool loop;
-    size_t frames_count;
+    size_t frames_num;
     size_t frame_duration;
     size_t time;
     Sprite **frames;

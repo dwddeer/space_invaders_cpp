@@ -38,3 +38,6 @@
 423	530	7210949513182593	space_invaders.exe	ab911170bb8cbebb
 3	422	7210950434347079	CMakeFiles/space_invaders.dir/src/main.cpp.obj	869156b82056c6a3
 422	530	7210950435397313	space_invaders.exe	ab911170bb8cbebb
+7	435	7210957945632184	CMakeFiles/space_invaders.dir/src/Dependencies/cpp/Game.cpp.obj	5014bde2169f8538
+3	466	7210957945942265	CMakeFiles/space_invaders.dir/src/main.cpp.obj	869156b82056c6a3
+466	590	7210957947152529	space_invaders.exe	ab911170bb8cbebb

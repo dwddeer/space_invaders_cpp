@@ -47,6 +47,8 @@ int main() {
 
     glClearColor(1.0, 0.0, 0.0, 1.0);
 
+    glfwSwapInterval(1);
+
     Buffer buffer;
     buffer.width = buffer_width;
     buffer.height = buffer_height;
@@ -137,10 +139,10 @@ int main() {
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(fullscreen_triangle_vao);
 
-    Sprite alien_sprite;
-    alien_sprite.width = 11;
-    alien_sprite.height = 8;
-    alien_sprite.data = new uint8_t[alien_sprite.width * alien_sprite.height]
+    Sprite alien_sprite_pos1;
+    alien_sprite_pos1.width = 11;
+    alien_sprite_pos1.height = 8;
+    alien_sprite_pos1.data = new uint8_t[alien_sprite_pos1.width * alien_sprite_pos1.height]
     {
             0,0,1,0,0,0,0,0,1,0,0, // . . @ . . . . . @ . .
             0,0,0,1,0,0,0,1,0,0,0, // . . . @ . . . @ . . .
@@ -150,6 +152,21 @@ int main() {
             1,0,1,1,1,1,1,1,1,0,1, // @ . @ @ @ @ @ @ @ . @
             1,0,1,0,0,0,0,0,1,0,1, // @ . @ . . . . . @ . @
             0,0,0,1,1,0,1,1,0,0,0  // . . . @ @ . @ @ . . .
+    };
+
+    Sprite alien_sprite_pos2;
+    alien_sprite_pos2.width = 11;
+    alien_sprite_pos2.height = 8;
+    alien_sprite_pos2.data = new uint8_t[alien_sprite_pos2.width * alien_sprite_pos2.height]
+    {
+            0,0,1,0,0,0,0,0,1,0,0, // ..@.....@..
+            1,0,0,1,0,0,0,1,0,0,1, // @..@...@..@
+            1,0,1,1,1,1,1,1,1,0,1, // @.@@@@@@@.@
+            1,1,1,0,1,1,1,0,1,1,1, // @@@.@@@.@@@
+            1,1,1,1,1,1,1,1,1,1,1, // @@@@@@@@@@@
+            0,1,1,1,1,1,1,1,1,1,0, // .@@@@@@@@@.
+            0,0,1,0,0,0,0,0,1,0,0, // ..@.....@..
+            0,1,0,0,0,0,0,0,0,1,0  // .@.......@.
     };
 
     Sprite player_sprite;
@@ -186,13 +203,24 @@ int main() {
         }
     }
 
+    SpriteAnimation* alien_animation = new SpriteAnimation;
+    alien_animation -> loop = true;
+    alien_animation -> frames_num = 2;
+    alien_animation -> frame_duration = 10;
+    alien_animation -> time = 0;
+
+    alien_animation -> frames = new Sprite *[2];
+    alien_animation -> frames[0] = &alien_sprite_pos1;
+    alien_animation -> frames[1] = &alien_sprite_pos2;
+
+
     //MAIN GAME LOOP
     while(!glfwWindowShouldClose(window)) {
         bufferClear(&buffer, clear_color);
 
         for(size_t i = 0; i < my_game.aliens_num; i++) {
             const Alien &alien = my_game.aliens[i];
-            bufferDrawSprite(&buffer, alien_sprite, alien.x, alien.y, rgbToUint32(206, 90, 103));
+            bufferDrawSprite(&buffer, alien_sprite_pos1, alien.x, alien.y, rgbToUint32(206, 90, 103));
         }
 
         bufferDrawSprite(&buffer, player_sprite, my_game.player.x, my_game.player.y, rgbToUint32(206, 90, 103));
@@ -216,7 +244,12 @@ int main() {
     glfwTerminate();
 
     delete[] buffer.data;
-
+    delete[] player_sprite.data;
+    delete[] alien_sprite_pos2.data;
+    delete[] alien_sprite_pos2.data;
+    delete[] alien_animation -> frames;
+    delete alien_animation;
+    delete my_game.aliens;
 
     return 0;
 }
