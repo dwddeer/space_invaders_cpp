@@ -47,7 +47,7 @@ int main() {
 
     glClearColor(1.0, 0.0, 0.0, 1.0);
 
-    glfwSwapInterval(1);
+    glfwSwapInterval(1); //V-sync
 
     Buffer buffer;
     buffer.width = buffer_width;
