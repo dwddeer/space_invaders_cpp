@@ -23,7 +23,7 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
     GLFWwindow *window;
-    window = glfwCreateWindow(900, 900, "Space Invaders", nullptr, nullptr);
+    window = glfwCreateWindow(2.5 * buffer_width, 2.5 * buffer_height, "Space Invaders", nullptr, nullptr);
     if(!window) {
         glfwTerminate();
         return -1;
@@ -183,26 +183,6 @@ int main() {
             1,1,1,1,1,1,1,1,1,1,1, // @@@@@@@@@@@
     };
 
-    uint32_t clear_color = rgbToUint32(252, 245, 237);
-
-    Game my_game;
-    my_game.width = buffer_width;
-    my_game.width = buffer_height;
-    my_game.aliens_num = 55;
-    my_game.aliens = new Alien[my_game.aliens_num];
-
-    my_game.player.x = 112 - 5;
-    my_game.player.y = 32;
-    my_game.player.lives = 3;
-
-
-    for(size_t yi = 0; yi < 5; yi++) {
-        for(size_t xi = 0; xi < 11; xi++) {
-            my_game.aliens[yi * 11 + xi].x = 16 * xi + 20;
-            my_game.aliens[yi * 11 + xi].y = 17 * yi + 128;
-        }
-    }
-
     SpriteAnimation* alien_animation = new SpriteAnimation;
     alien_animation -> loop = true;
     alien_animation -> frames_num = 2;
@@ -213,6 +193,26 @@ int main() {
     alien_animation -> frames[0] = &alien_sprite_pos1;
     alien_animation -> frames[1] = &alien_sprite_pos2;
 
+    Game my_game;
+    my_game.width = buffer_width;
+    my_game.height = buffer_height;
+    my_game.aliens_num = 55;
+    my_game.aliens = new Alien[my_game.aliens_num];
+
+    my_game.player.x = 112 - 5;
+    my_game.player.y = 32;
+    my_game.player.lives = 3;
+
+    uint32_t clear_color = rgbToUint32(252, 245, 237);
+
+    for(size_t yi = 0; yi < 5; yi++) {
+        for(size_t xi = 0; xi < 11; xi++) {
+            my_game.aliens[yi * 11 + xi].x = 16 * xi + 20;
+            my_game.aliens[yi * 11 + xi].y = 17 * yi + 128;
+        }
+    }
+
+    int player_move_dir = 1;
 
     //MAIN GAME LOOP
     while(!glfwWindowShouldClose(window)) {
@@ -220,10 +220,22 @@ int main() {
 
         for(size_t i = 0; i < my_game.aliens_num; i++) {
             const Alien &alien = my_game.aliens[i];
-            bufferDrawSprite(&buffer, alien_sprite_pos1, alien.x, alien.y, rgbToUint32(206, 90, 103));
+            size_t current_frame = alien_animation -> time / alien_animation -> frame_duration;
+            const Sprite &sprite = *alien_animation -> frames[current_frame];
+            bufferDrawSprite(&buffer, sprite, alien.x, alien.y, rgbToUint32(128, 0, 0));
         }
 
         bufferDrawSprite(&buffer, player_sprite, my_game.player.x, my_game.player.y, rgbToUint32(206, 90, 103));
+
+        alien_animation -> time++;
+        if(alien_animation -> time == alien_animation -> frames_num * alien_animation -> frame_duration) {
+            if(alien_animation -> loop)
+                alien_animation -> time = 0;
+            else {
+                delete alien_animation;
+                alien_animation = nullptr;
+            }
+        }
 
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -235,7 +247,19 @@ int main() {
         );
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
         glfwSwapBuffers(window);
+
+        if(my_game.player.x + player_sprite.width + player_move_dir >= my_game.width - 1) {
+            my_game.player.x = my_game.width - player_sprite.width - player_move_dir - 1;
+            player_move_dir *= -1;
+        }
+        else if((int)my_game.player.x + player_move_dir <= 0) {
+            my_game.player.x = 0;
+            player_move_dir *= -1;
+        }
+        else my_game.player.x += player_move_dir;
+
         glfwPollEvents();
     }
 
