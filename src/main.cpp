@@ -71,32 +71,7 @@ int main() {
     GLuint fullscreen_triangle_vao;
     glGenVertexArrays(1, &fullscreen_triangle_vao);
 
-    static const char* fragment_shader =
-            "\n"
-            "#version 330\n"
-            "\n"
-            "uniform sampler2D buffer;\n"
-            "noperspective in vec2 TexCoord;\n"
-            "\n"
-            "out vec3 outColor;\n"
-            "\n"
-            "void main(void){\n"
-            "    outColor = texture(buffer, TexCoord).rgb;\n"
-            "}\n";
 
-    static const char* vertex_shader =
-            "\n"
-            "#version 330\n"
-            "\n"
-            "noperspective out vec2 TexCoord;\n"
-            "\n"
-            "void main(void){\n"
-            "\n"
-            "    TexCoord.x = (gl_VertexID == 2)? 2.0: 0.0;\n"
-            "    TexCoord.y = (gl_VertexID == 1)? 2.0: 0.0;\n"
-            "    \n"
-            "    gl_Position = vec4(2.0 * TexCoord - 1.0, 0.0, 1.0);\n"
-            "}\n";
 
     GLuint shader_id = glCreateProgram();
     {
@@ -132,7 +107,7 @@ int main() {
 
     glUseProgram(shader_id);
 
-    GLint  location = glGetUniformLocation(shader_id, "buffer");
+    GLint location = glGetUniformLocation(shader_id, "buffer");
     glUniform1i(location, 0);
 
     glDisable(GL_DEPTH_TEST);
@@ -222,9 +197,12 @@ int main() {
             const Alien &alien = my_game.aliens[i];
             size_t current_frame = alien_animation -> time / alien_animation -> frame_duration;
             const Sprite &sprite = *alien_animation -> frames[current_frame];
-            bufferDrawSprite(&buffer, sprite, alien.x, alien.y, rgbToUint32(128, 0, 0));
+
+            //ALIEN SPRITES AND COLOR
+            bufferDrawSprite(&buffer, sprite, alien.x, alien.y, rgbToUint32(206, 90, 103));
         }
 
+        //PLAYER SPRITE AND COLOR
         bufferDrawSprite(&buffer, player_sprite, my_game.player.x, my_game.player.y, rgbToUint32(206, 90, 103));
 
         alien_animation -> time++;
@@ -250,6 +228,8 @@ int main() {
 
         glfwSwapBuffers(window);
 
+
+        //WINDOW BOUNDARIES FOR PLAYER OBJECT
         if(my_game.player.x + player_sprite.width + player_move_dir >= my_game.width - 1) {
             my_game.player.x = my_game.width - player_sprite.width - player_move_dir - 1;
             player_move_dir *= -1;
