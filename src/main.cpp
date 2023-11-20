@@ -19,8 +19,8 @@ void printVersion() {
 }
 
 int main() {
-    const size_t buffer_width = 224;
-    const size_t buffer_height = 256;
+    const size_t BUFFER_WIDTH = 224;
+    const size_t BUFFER_HEIGHT = 256;
 
     glfwSetErrorCallback(error_callback);
 
@@ -33,7 +33,7 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
     GLFWwindow *window;
-    window = glfwCreateWindow(2.5 * buffer_width, 2.5 * buffer_height, "Space Invaders", nullptr, nullptr);
+    window = glfwCreateWindow(2.5 * BUFFER_WIDTH, 2.5 * BUFFER_HEIGHT, "Space Invaders", nullptr, nullptr);
     if(!window) {
         glfwTerminate();
         return -1;
@@ -54,9 +54,9 @@ int main() {
     glfwSwapInterval(1); //V-sync
 
     Buffer buffer;
-    buffer.width = buffer_width;
-    buffer.height = buffer_height;
-    buffer.data = new uint32_t[buffer_width * buffer_height];
+    buffer.width = BUFFER_WIDTH;
+    buffer.height = BUFFER_HEIGHT;
+    buffer.data = new uint32_t[BUFFER_WIDTH * BUFFER_HEIGHT];
     bufferClear(&buffer, 0);
 
     GLuint buffer_texture;
@@ -173,8 +173,8 @@ int main() {
     alien_animation -> frames[1] = &alien_sprite_pos2;
 
     Game my_game;
-    my_game.width = buffer_width;
-    my_game.height = buffer_height;
+    my_game.width = BUFFER_WIDTH;
+    my_game.height = BUFFER_HEIGHT;
     my_game.aliens_num = 55;
     my_game.aliens = new Alien[my_game.aliens_num];
 
