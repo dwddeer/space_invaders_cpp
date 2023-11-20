@@ -8,6 +8,16 @@
 
 using namespace std;
 
+void printVersion() {
+    int glVersion[2] = {-1, 1};
+    glGetIntegerv(GL_MAJOR_VERSION, &glVersion[0]);
+    glGetIntegerv(GL_MINOR_VERSION, &glVersion[1]);
+
+    cout << "Using OpenGL: " << glVersion[0] << "." << glVersion[1] << endl;
+    cout << "Renderer used: " << glGetString(GL_RENDERER) << endl;
+    cout << "Shading language: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << endl;
+}
+
 int main() {
     const size_t buffer_width = 224;
     const size_t buffer_height = 256;
@@ -37,13 +47,7 @@ int main() {
         return -1;
     }
 
-    int glVersion[2] = {-1, 1};
-    glGetIntegerv(GL_MAJOR_VERSION, &glVersion[0]);
-    glGetIntegerv(GL_MINOR_VERSION, &glVersion[1]);
-
-    cout << "Using OpenGL: " << glVersion[0] << "." << glVersion[1] << endl;
-    cout << "Renderer used: " << glGetString(GL_RENDERER) << endl;
-    cout << "Shading language: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << endl;
+    printVersion();
 
     glClearColor(1.0, 0.0, 0.0, 1.0);
 
