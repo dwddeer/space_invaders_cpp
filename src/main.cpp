@@ -7,12 +7,20 @@
 using namespace std;
 
 bool game_running = false;
+int move_dir = 0;
+
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods ) {
     switch(key) {
         case GLFW_KEY_ESCAPE:
             if(action == GLFW_PRESS) game_running = false;
             break;
+        case GLFW_KEY_RIGHT:
+            if(action == GLFW_PRESS) move_dir += 1;
+            else if(action == GLFW_RELEASE) move_dir -= 1;
+        case GLFW_KEY_LEFT:
+            if(action == GLFW_PRESS) move_dir -= 1;
+            else if(action == GLFW_RELEASE) move_dir += 1;
         default:
             break;
     }
@@ -48,6 +56,7 @@ int main() {
         glfwTerminate();
         return -1;
     }
+    glfwSetKeyCallback(window, keyCallback);
     glfwMakeContextCurrent(window);
 
     GLenum err = glewInit();
@@ -202,9 +211,10 @@ int main() {
     }
 
     int player_move_dir = 1;
+    game_running = true;
 
     //MAIN GAME LOOP
-    while(!glfwWindowShouldClose(window)) {
+    while(!glfwWindowShouldClose(window) && game_running) {
         bufferClear(&buffer, clear_color);
 
         for(size_t i = 0; i < my_game.aliens_num; i++) {
@@ -253,6 +263,8 @@ int main() {
             player_move_dir *= -1;
         }
         else my_game.player.x += player_move_dir;
+
+
 
         glfwPollEvents();
     }
