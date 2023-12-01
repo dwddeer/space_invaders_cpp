@@ -1,12 +1,22 @@
+#include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <iostream>
-
 #include "Dependencies/include/Rendering.h"
 #include "Dependencies/include/ErrorHandling.h"
 #include "Dependencies/include/Game.h"
-
 using namespace std;
+
+bool game_running = false;
+
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods ) {
+    switch(key) {
+        case GLFW_KEY_ESCAPE:
+            if(action == GLFW_PRESS) game_running = false;
+            break;
+        default:
+            break;
+    }
+}
 
 void printVersion() {
     int glVersion[2] = {-1, 1};

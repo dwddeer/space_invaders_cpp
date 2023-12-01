@@ -2,6 +2,8 @@
 #define SPACE_INVADERS_GAME_H
 
 #include "Rendering.h"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
 struct Alien {
     size_t x, y;
@@ -27,5 +29,7 @@ struct SpriteAnimation {
     size_t time;
     Sprite **frames;
 };
+
+void keyCallback(GLFWwindow* , int , int , int , int );
 
 #endif //SPACE_INVADERS_GAME_H
